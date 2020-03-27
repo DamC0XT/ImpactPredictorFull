@@ -1,10 +1,12 @@
 {% extends 'mainlayout.html' %}
 {%block content%}
-<div class="row">
+<div class="col">
 
    
+    {% for data in pred%}
 
-    <textbox>{{pred}}</textbox>
+    <textbox>Date : = {{data.Date}} <br> Temperature for Cork : = {{data.Temperature}} Celsius <br></textbox>
+    {% endfor %}
 
     
 

@@ -1,19 +1,11 @@
-from flask import Flask, redirect, url_for, request, render_template, flash, redirect, url_for
-import pandas as ps
-import numpy as nm
-from sqlalchemy import create_engine, Table,BIGINT ,TEXT, Column, Integer, String,Date,FLOAT, MetaData
-from forms import SelectDateForm
-from flask.json import jsonify
-import requests
-import tensorflow as tf
-from recurrent import RecurrentNet
-import pandas as ps
-import numpy as np
-import requests
 import json
-import os
 
-
+import pandas as ps
+import requests
+from flask import Flask, request, render_template, redirect, url_for
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String ,select
+from forms import SelectDateForm
+import _sqlite3
 app = Flask(__name__,static_url_path='/static')
 
 
@@ -33,64 +25,51 @@ def rainfall():
   form = SelectDateForm()
   dateFrom = 0
   dateTo = 0
-
+  hist = 0
   if request.method == 'POST':
     dateFrom = request.form['date']
     dateTo = request.form['dateto']
+    hist = request.form['historicalOptions']
   if form.validate_on_submit():
 
-    return redirect(url_for('showData',dateFrom=dateFrom,dateTo=dateTo))
+    return redirect(url_for('showData',dateFrom=dateFrom,dateTo=dateTo,hist=hist))
  
   return render_template('historical.html',form=form)
 
 
-'''
-@app.route('/rainfall/<year>',methods=['GET','POST'])
-def rainfallAPI(year):
-  
-  engine = create_engine('sqlite:///ImpactWeather.db', echo=True)
-  query = "SELECT * FROM rain where date like '%{}'".format(str(year))
-  rain = engine.execute(query).fetchall()
-
-  corkRain = []
-
-  for data in rain:
-     dataObj = {}
-     dataObj['date'] = data.date
-     dataObj['rainfall'] = data.rain
-     corkRain.append(dataObj)
-
-  return jsonify({'Cork Rainfall : = ' : corkRain})
-'''
 
 
 
 
 
 
-@app.route('/showdata/<dateFrom>/<dateTo>',methods=['GET','POST'])
-def showData(dateFrom,dateTo):
+@app.route('/showdata/<dateFrom>/<dateTo>/<hist>',methods=['GET','POST'])
+def showData(dateFrom,dateTo,hist):
 
   data = ps.read_csv('CorkAirport.csv')
-  Soil = data[['date', 'soil']]
+  Soil = data[['date', hist]]
   Soil['date'] = ps.to_datetime(Soil['date'])
   soilMask = (Soil['date'] > dateFrom) & (Soil['date'] <= dateTo)
   myData = Soil.loc[soilMask]
 
 
-  return render_template('showdata.html',myData=myData.values.tolist())
+  return render_template('showdata.html',myData=myData.values.tolist(),hist=hist)
 
 
-@app.route('/weather',methods=['GET'])
+@app.route('/weather')
 def showWeather():
+  engine = create_engine('sqlite:///predictions.db',echo=True)
+  connection = engine.connect()
+  metadata = MetaData()
+  predictions = Table('predictions', metadata, autoload=True, autoload_with=engine)
 
-  myRequest = requests.get('http://localhost:5050/predict')
-  
+  query = select([predictions])
 
- 
-  preds = myRequest.json()
-  pred = json.dumps(preds)
-  
+  ResultProxy = connection.execute(query)
+
+  pred = ResultProxy.fetchall()
+  print(pred)
+
 
   return render_template('weather.html',pred=pred)
 

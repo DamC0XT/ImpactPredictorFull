@@ -39,6 +39,8 @@ class WeatherAPI(ScraperInterface):
 
             self.pressure.append(child.attrib['value'])
 
+         print(self.timeFrom)
+         print(self.timeTo)
          #making a dictionary from the lists to return
          self.weatherDict['Temp'] = self.temp
          self.weatherDict['Pressure'] = self.pressure

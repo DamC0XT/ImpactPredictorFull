@@ -1,4 +1,5 @@
 import pandas as ps
+import numpy as np
 
 from MLClasses.LoadDataExtractInterface import LoadDataExtractInterface
 
@@ -19,13 +20,14 @@ class LoadDataExtract(LoadDataExtractInterface):
 
         # setting timeshift
         dayShift = 1
-        shiftSteps = dayShift * 24
+        shiftSteps = dayShift * 7
 
         # from the correlation i decided i will use dewpt, vappr, wetb first
 
         dataset['DateTime'] = dataset.index.dayofyear
 
         features = dataset[['maxtp', 'cbl']]
+
 
 
 

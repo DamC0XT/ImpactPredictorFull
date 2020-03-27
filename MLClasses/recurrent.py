@@ -6,6 +6,7 @@ import numpy as np
 import pandas as ps
 import tensorflow as tf
 from tensorflow.keras import layers
+from tensorflow.python.keras.initializers import RandomUniform
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import accuracy_score
@@ -62,6 +63,7 @@ class RecurrentNet(RecurrentInterface):
 
 
     def setUpNetwork(self,numXInput,numYOutput):
+
         model = tf.keras.Sequential()
         
         #Bidirection RNN processes sequence from start to end, but also backwards
@@ -70,10 +72,12 @@ class RecurrentNet(RecurrentInterface):
 
         
         # dense layer to give back outputs of one output
-        model.add(layers.Dense(numYOutput,activation = 'sigmoid'))
 
 
-        model.build((None,numXInput))
+
+        model.add(layers.Dense(numYOutput,activation='linear'))
+
+        model.build((None, numXInput))
         model.summary()
 
         return model
@@ -83,80 +87,24 @@ class RecurrentNet(RecurrentInterface):
        
         model.compile(loss='mse',optimizer='adam',metrics=['accuracy'])
 
-        model.fit_generator(generator=generator,validation_data=validation,epochs=20,steps_per_epoch=100)
+        model.fit_generator(generator=generator,validation_data=validation,epochs=50,steps_per_epoch=100)
 
         
 
-    def loadDataAndFeatureExtraction(self, csvName):
-        # load dataset
-        dataset = ps.read_csv(csvName, parse_dates=[0], index_col=0)
-        # print to see if all has been read in
-        print(dataset.head())
-        # find correaltion in data that is best suited to temperature
-        print(dataset.corr()['maxtp'])
-
-        # setting timeshift
-        dayShift = 1
-        shiftSteps = dayShift * 24
-
-        # from the correlation i decided i will use dewpt, vappr, wetb first
-
-        dataset['DateTime'] = dataset.index.dayofyear
-
-        features = dataset[['maxtp', 'cbl']]
 
 
 
-
-        targets = dataset[['maxtp', 'cbl']]
-
-        target = targets.shift(-shiftSteps)
-
-        X = features.values[0:-shiftSteps]
-        y = target.values[:-shiftSteps]
-
-        return X, y
-
-    def dataSplit(self, X, y):
-        lengthData = len(X)
-        split = 0.8
-
-        trainingNumber = int(split * lengthData)
-
-        x_train = X[:trainingNumber]
-        x_test = y[trainingNumber:]
-
-        y_train = X[0:trainingNumber]
-        y_test = y[trainingNumber:]
-
-        numXInput = X.shape[1]
-        numYOutput = y.shape[1]
-
-        return x_train, x_test, y_train, y_test, numXInput, numYOutput, trainingNumber
-
-    def scale(self, x_train, x_test, y_train, y_test):
-        xTrainScaler = MinMaxScaler()
-        xTrainScaled = xTrainScaler.fit_transform(x_train)
-
-        xTestScaled = xTrainScaler.fit_transform(x_test)
-
-        yTrainScaler = MinMaxScaler()
-        yTrainScaled = yTrainScaler.fit_transform(y_train)
-        yTestScaled = yTrainScaler.fit_transform(y_test)
-
-        return xTrainScaled, xTestScaled, yTrainScaled, yTestScaled, yTrainScaler
-        
         
        
     def RNNPredict(self,model,X,yTrainScaler):
          
          preddy = yTrainScaler.fit_transform(X)
          pred = np.expand_dims(preddy,axis=0)
-         print(pred)
+
          
          predictions = model.predict(pred)
          predictions = predictions.tolist()
-         print(predictions)
+
          pred_P = yTrainScaler.inverse_transform(predictions[0])
          
 
