@@ -2,11 +2,17 @@ import json
 
 import pandas as ps
 import requests
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, jsonify
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String ,select
 from forms import SelectDateForm
 import _sqlite3
+import json
+
+
+
+
 app = Flask(__name__,static_url_path='/static')
+
 
 
 
@@ -46,14 +52,19 @@ def rainfall():
 @app.route('/showdata/<dateFrom>/<dateTo>/<hist>',methods=['GET','POST'])
 def showData(dateFrom,dateTo,hist):
 
+  #Read date from csv and use form input to send the view
   data = ps.read_csv('CorkAirport.csv')
   Soil = data[['date', hist]]
   Soil['date'] = ps.to_datetime(Soil['date'])
   soilMask = (Soil['date'] > dateFrom) & (Soil['date'] <= dateTo)
   myData = Soil.loc[soilMask]
 
+  myData.to_csv("/home/roidanomaly/ImpactPredictor/static/Graph.csv",sep='\t',index=False)
 
-  return render_template('showdata.html',myData=myData.values.tolist(),hist=hist)
+  return render_template('showdata.html',myData=myData.values.tolist(),hist=hist,dateFrom=dateFrom,dateTo=dateTo)
+
+
+
 
 
 @app.route('/weather')

@@ -42,7 +42,24 @@ textbox{
 
 }
 
+#histGraph{
+    margin-top:20px;
+    background-color: aliceblue;
+    overflow: scroll;
+    width:100%;
 
+
+}
+
+#histG{
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+#myGraph{
+    height:500px;
+    overflow: scroll;
+}
 
 
 body{
