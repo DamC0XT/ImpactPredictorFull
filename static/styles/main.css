@@ -59,6 +59,11 @@ textbox{
 #myGraph{
     height:500px;
     overflow: scroll;
+    width:5000px;
+}
+
+#formError{
+    color:white;
 }
 
 

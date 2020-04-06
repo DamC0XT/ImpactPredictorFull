@@ -4,7 +4,7 @@
    
         <h1></h1>
         
-        <form action="#" method = "POST">
+        <form action="/historical" method = "POST">
             {{ form.csrf_token }}
 
             <fieldset class="form-group">
@@ -21,7 +21,7 @@
                     <div class="invalid-feedback">
 
                         {% for error in form.date.errors %}
-                            <span>{{ error }}</span>
+                            <span id="formError">{{ error }}</span>
                         {% endfor %}
 
                     </div>
@@ -46,23 +46,10 @@
     </fieldset>
 
         </form>
-        {% with messages = get_flashed_messages(with_categories = true) %}
 
-        {% if messages %}
 
-            {% for category , messages in messages%}
 
-                <div class="alert alert={{ category }}">
 
-                    {{ message }}
 
-                </div>
-
-            {% endfor %}
-
-        {%endif%}
-
-    {% endwith %}
-     
     </div>
    {%endblock%}
