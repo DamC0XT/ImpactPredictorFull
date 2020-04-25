@@ -7,12 +7,13 @@
 
 
 
-        <h1 class="text-primary">Historical Data</h1>
-        
-            <table class="table table-bordered table-striped">
+        <h1 id="histHead" class="text-primary">Historical Data</h1>
+        <span>Date From: = {{dateFrom}}, Date To = {{dateTo}}</span>
+            <table id="histTable" class="table table-bordered table-striped">
+
                 <th class="text-center">Day</th>
                 <th class="text-center">Month</th>
-                <th class="text-center">Year</th>
+
                 <th class="text-center">{{hist}}</th>
 
                 {% for table in myData%}
@@ -23,7 +24,7 @@
 
                     <td class="text-center">{{table[0].month}}</td>
 
-                    <td class="text-center">{{table[0].year}}</td>
+
 
                     <td class="text-center">{{table[1]}}</td>
 

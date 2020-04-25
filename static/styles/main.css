@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
 table ,th , td{
     border: 2px black solid;
 }
@@ -28,7 +30,13 @@ a{
 #foot a:hover{
     color:blue;
 }
+#AnalysisTable{
+    width:500px;
+}
 
+#histTable{
+    width:600px;
+}
 #navMen{
     color:white;
 }
@@ -71,7 +79,7 @@ body{
 
 
     background-size:100% auto;
-    background-image: url("/static/images/earthburns.jpg");
+    background-image: url("/static/images/landscape.jpg");
     background-attachment: fixed ;
     background-repeat: no-repeat;
     background-size: cover;
@@ -85,7 +93,7 @@ body{
 }
 
 #indexText{
-    background-color:black;
+    font-family: 'Anton', sans-serif;
 
     color:white;
     overflow:hidden;
@@ -108,4 +116,21 @@ form{
 table{
     background-color: white;
 }
+
+#compare{
+
+    color:white;
+}
+
+#compare1{
+
+    color:white;
+}
+
+#graphdiv3{
+    background-color: darkblue;
+}
+
+
+
 
