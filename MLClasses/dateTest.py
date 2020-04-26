@@ -12,11 +12,11 @@ class datesTest():
         return data
     #checking dates in a range
     def dataSortSplit(self,data):
-        data = ps.read_csv(csvName)
+        data = ps.read_csv(data)
         Soil = data[['date','soil']]
         Soil['date'] = ps.to_datetime(Soil['date'])
         soilMask = (Soil['date'] > '01-jan-2010') & (Soil['date'] <= '02-feb-2010')
-        print(Soil.loc[soilMask])
+        return Soil.loc[soilMask]
 
 
 
@@ -26,5 +26,4 @@ if __name__ == '__main__':
     obj = datesTest()
     csvName = 'CorkAirport.csv'
     data = obj.loadCSV(csvName)
-
-obj.dataSortSplit(data)
+    obj.dataSortSplit(data)

@@ -98,14 +98,29 @@
             </tr>
 
             <tr>
-                <td>{{2020}} Predictions from March</td>
-                <td>{{max}}</td>
-                <td>{{min}}</td>
-                <td>{{average}}</td>
+                <td>{{2020}} March - Present from Predictions</td>
+                <td>{{myList['2020Predictions']['Max']}}</td>
+                <td>{{myList['2020Predictions']['Min']}}</td>
+                <td>{{myList['2020Predictions']['Average']}}</td>
 
             </tr>
 
         </table>
+    </div>
+    <div class="col">
+           <div id="graphdiv4"
+  style="width:500px; height:300px;"></div>
+<script type="text/javascript">
+  g3 = new Dygraph(
+    document.getElementById("graphdiv4"),
+    "{{ url_for('static', filename='Analysis.csv') }}",
+    {
+      rollPeriod: 7,
+      showRoller: true
+    }
+  );
+</script>
+
     </div>
 
 

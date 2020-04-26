@@ -44,20 +44,13 @@ def rainfall():
     if form.date.data is not None and form.dateto.data is not None and graphOrTable == 'table':
       return redirect(url_for('showData',dateTo=dateTo,dateFrom=dateFrom,hist=hist))
 
+    if form.date.data is not None and form.dateto.data is not None and graphOrTable == 'graph':
+        return redirect(url_for('showGraph', dateTo=dateTo, dateFrom=dateFrom, hist=hist))
 
 
 
 
     return render_template('historical.html', form=form)
-
-
-
-
-
-
-
-
-
 
 
 
@@ -74,6 +67,18 @@ def showData(dateFrom, dateTo, hist):
 
     return render_template('showdata.html', myData=myData.values.tolist(), hist=hist, dateFrom=dateFrom, dateTo=dateTo)
 
+@app.route('/ShowGraph/<dateFrom>/<dateTo>/<hist>', methods=['GET', 'POST'])
+def showGraph(dateFrom, dateTo, hist):
+    # Read date from csv and use form input to send the view
+    data = ps.read_csv('CorkAirport.csv', parse_dates=[0])
+    Soil = data[['date', hist]]
+    Soil['date'] = ps.to_datetime(Soil['date'])
+    soilMask = (Soil['date'] > dateFrom) & (Soil['date'] <= dateTo)
+    myData = Soil.loc[soilMask]
+
+    myData.to_csv("/home/roidanomaly/ImpactPredictor/static/Graph.csv", sep='\t', index=False)
+
+    return render_template('ShowGraph.html', myData=myData.values.tolist())
 
 @app.route('/weather')
 def showWeather():
@@ -98,7 +103,7 @@ def TempCompare():
     object = AnalyzeData()
     myList = object.getDataAndAnalyze()
     predictionsList =[]
-
+    graphYears = ['2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020']
     engine = create_engine('sqlite:///predictions.db', echo=True)
     connection = engine.connect()
     metadata = MetaData()
@@ -116,9 +121,13 @@ def TempCompare():
     Min = nm.min(predictionsList)
     Average = nm.average(predictionsList)
 
+    myList['2020Predictions'] = {'Max':Max,'Min':Min,'Average':round(Average)}
+
+    preCSV = ps.DataFrame.from_dict(myList)
+    preCSV.to_csv("/home/roidanomaly/ImpactPredictor/static/Analysis.csv", sep='\t', index=False)
 
 
-    return render_template('Global.html',myList=myList,max=Max,min=Min,average=round(Average))
+    return render_template('Global.html',myList=myList,preCSV=preCSV)
 
 
 
