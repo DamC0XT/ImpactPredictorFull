@@ -1,0 +1,9 @@
+flask
+sqlalchemy
+datetime
+numpy
+pandas
+requests
+flask-wtf
+wtforms
+mysql-connector

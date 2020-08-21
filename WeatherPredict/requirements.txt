@@ -1,0 +1,8 @@
+pandas
+numpy
+sqlalchemy
+datetime
+tensorflow
+sklearn
+keras
+mysql-connector

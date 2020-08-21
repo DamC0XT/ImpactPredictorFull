@@ -1,0 +1,53 @@
+{% extends 'mainlayout.html' %}
+    {% block content%}
+   
+
+        
+      <div class ="col" id="myTable">
+
+         {% with messages = get_flashed_messages() %}
+        {% if messages %}
+
+        {% for message in messages %}
+                <span class="flashes">{{ message }}</span>
+        {% endfor %}
+
+         {% endif %}
+        {% endwith %}
+
+        <h1 id="histHead" class="text-primary">Historical Data</h1>
+        <span>Date From: = {{dateFrom}}, Date To = {{dateTo}}</span>
+            <table id="histTable" class="table table-bordered table-striped">
+
+                <th class="text-center">Day</th>
+                <th class="text-center">Month</th>
+
+                <th class="text-center">{{hist}}</th>
+
+                {% for table in myData%}
+                <tr>
+
+
+                    <td class="text-center">{{table[0].day}}</td>
+
+                    <td class="text-center">{{table[0].month}}</td>
+
+
+
+                    <td class="text-center">{{table[1]}}</td>
+
+
+
+                </tr>
+                {%endfor%}
+
+
+            </table>
+
+             </div>
+        
+        
+    
+   
+    {%endblock %}
+

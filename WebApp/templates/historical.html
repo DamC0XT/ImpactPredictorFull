@@ -1,0 +1,65 @@
+{% extends 'mainlayout.html' %}
+{%block content%}
+    <div class="content-section">
+   
+       {% with messages = get_flashed_messages() %}
+        {% if messages %}
+
+        {% for message in messages %}
+                <span class="flashes">{{ message }}</span>
+        {% endfor %}
+
+         {% endif %}
+        {% endwith %}
+        
+        <form action="http://127.0.0.1:8001/historical" method = "POST">
+            {{ myform.csrf_token }}
+
+            <fieldset class="form-group">
+                <legend class="border-top mb-4">Select Date to Display Data</legend>
+                <div class="form-group">
+                    {{myform.historicalOptions.label(class = "form-control-label")}}  {{myform.historicalOptions(class = "form-control form-control")}}
+                    {{myform.displayOptions.label(class = "form-control-label")}}  {{myform.displayOptions(class="form-control form-control")}}
+
+                    {{myform.date.label(class = "form-control-label")}} {{myform.date(class = "form-control form-control")}}
+                   
+                    {{myform.dateto.label(class = "form-control-label")}} {{myform.dateto(class = "form-control form-control")}}
+                    {% if myform.date.errors %}
+                    
+                    {{myform.date(class = "form-control form-control-lg is-invalid")}}
+                    {{myform.dateto(class = "form-control form-control-lg is-invalid")}}
+                    <div class="invalid-feedback">
+
+                        {% for error in myform.date.errors %}
+                            <span id="formError">{{ error }}</span>
+                        {% endfor %}
+
+                        {% for error1 in myform.dateto.errors %}
+                            <span id="formError1">{{ error1 }}</span>
+                        {% endfor %}
+
+                    </div>
+                    {% endif %}
+                </div>
+           
+        
+       
+           
+            </fieldset>
+
+
+     <fieldset class="form-group">
+        <div class ="form-group">
+            {{myform.submit(class = "btn btn-outline-info")}}
+
+        </div>
+    </fieldset>
+
+        </form>
+
+
+
+
+
+    </div>
+   {%endblock%}

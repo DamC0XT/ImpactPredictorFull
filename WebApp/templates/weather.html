@@ -1,0 +1,18 @@
+{% extends 'mainlayout.html' %}
+{%block content%}
+<div class="col">
+
+   
+    {% for data in pred%}
+
+    <textbox id ="weather"> Temperatures for Cork Today at {{time}} : = {{data[2]}} Celsius <br></textbox>
+    {% endfor %}
+
+    
+
+
+
+
+</div>
+
+{%endblock %}

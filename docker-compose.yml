@@ -1,0 +1,63 @@
+version: '3'
+
+services:
+
+    weather:
+      image: predictor
+      ports:
+        - "4000:4000"
+      links:
+        - "db"
+
+    compare:
+      image: compapi
+      ports:
+        - "8000:5000"
+
+    web:
+      image: impactpredictor
+      ports: 
+        - "8001:5000"
+      links:
+        - "db"
+
+
+    db:
+      image: mysql:5.7
+      ports:
+        - "32000:3306"
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: Predict
+      volumes:
+        - ./db:/docker-entrypoint-initdb.d/:ro
+    
+    dbtest:
+        image: testing
+        ports:
+          - 2000:2000
+    
+    webapptest:
+        image: webtest
+        ports:
+          - 3000:3000
+    
+
+volumes:
+  mysql-data:
+
+
+  
+
+
+
+
+
+
+    
+
+     
+     
+        
+  
+   

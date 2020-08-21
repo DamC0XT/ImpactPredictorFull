@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+table ,th , td{
+    border: 2px black solid;
+}
+
+#myTable{
+    overflow: scroll;
+    height: 400px;
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+    padding:0;
+}
+
+ul{
+    list-style: none;
+}
+
+a{
+    color:white;
+}
+
+#foot a{
+    color:white;
+}
+
+#foot a:hover{
+    color:blue;
+}
+#AnalysisTable{
+    width:500px;
+}
+
+#histTable{
+    width:600px;
+}
+
+.flashes{
+
+    border: 1px solid black;
+    background-color: black;
+    color:white;
+
+
+}
+#navMen{
+    color:white;
+}
+
+h1{
+    color:white;
+}
+
+textbox{
+    color:white;
+
+}
+
+#histGraph{
+    margin-top:20px;
+    background-color: aliceblue;
+    overflow: scroll;
+    width:100%;
+
+
+}
+
+#histG{
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+#myGraph{
+    height:500px;
+    overflow: scroll;
+    width:5000px;
+}
+
+#formError{
+    color:black;
+}
+
+
+body{
+
+
+    background-size:100% auto;
+    background-image: url("/static/images/landscape.jpg");
+    background-attachment: fixed ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-family: 'Anton', sans-serif;
+    color:white;
+}
+.container-fluid{
+    width:100%;
+    height:100%;
+
+
+}
+
+#indexText{
+    font-family: 'Anton', sans-serif;
+
+    color:white;
+    overflow:hidden;
+}
+
+
+
+
+
+#foot{
+    background-color:black;
+    color:white;
+}
+
+form{
+    color:white;
+
+}
+
+table{
+    background-color: white;
+}
+
+#compare{
+
+    color:white;
+}
+
+#compare1{
+
+    color:white;
+}
+
+#graphdiv3{
+    background-color: darkblue;
+     overflow-x: scroll;
+     overflow-y: scroll;
+}
+
+#Header{
+
+}
+
+
+.jumbotron{
+    background-color: darkblue;
+}
+
+#weather{
+    background-color: darkblue;
+
+}
+
+.content-section{
+    background-color: darkblue;
+}
+
+.dygraph-legend{
+    background-color: aquamarine;
+    color:black;
+}
+
+.highlight{
+    color:black;
+    background-color: aquamarine;
+}
+
+#Ggraph{
+
+    color:black;
+}
+
+#graphdiv4{
+    background-color: darkblue;
+}

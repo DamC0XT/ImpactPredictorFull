@@ -1,0 +1,28 @@
+{% extends 'mainlayout.html' %}
+{%block content%}
+<div>
+  {% with messages = get_flashed_messages() %}
+        {% if messages %}
+
+        {% for message in messages %}
+                <span class="flashes">{{ message }}</span>
+        {% endfor %}
+
+         {% endif %}
+        {% endwith %}
+</div>
+
+    <div id="graphdiv3"
+  style="width:500px; height:300px;"></div>
+<script type="text/javascript">
+
+
+  g4 = new Dygraph(
+    document.getElementById("graphdiv3"),
+      "{{url_for('static', filename='Graph.csv')}}"
+
+
+    );
+</script>
+
+{%endblock%}

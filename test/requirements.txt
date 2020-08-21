@@ -1,0 +1,6 @@
+pytest
+flask
+datetime
+pandas
+numpy
+sqlalchemy
